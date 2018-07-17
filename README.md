@@ -67,5 +67,5 @@ With this code, when `my-event` is emited this function will be executed with a 
 #### Detach an event
 This feature is not yet implemented.
 
-#License
+# License
 MIT

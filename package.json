@@ -1,5 +1,5 @@
 {
-  "name": "event-bus.js",
+  "name": "js-event-bus",
   "version": "0.0.1",
   "description": "Event bus for your Javascript applications",
   "main": "src/index.js",
