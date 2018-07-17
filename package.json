@@ -1,0 +1,14 @@
+{
+  "name": "event-bus.js",
+  "version": "0.0.1",
+  "description": "Event bus for your Javascript applications",
+  "main": "src/index.js",
+  "author": "Boris Cerati",
+  "license": "MIT",
+  "devDependencies": {
+    "uglify-js": "^3.4.5"
+  },
+  "scripts": {
+    "build": "uglifyjs ./src/index.js -o ./lib/event-bus-js.min.js"
+  }
+}
