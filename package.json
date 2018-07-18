@@ -2,13 +2,24 @@
   "name": "js-event-bus",
   "version": "0.0.1",
   "description": "Event bus for your Javascript applications",
+  "homepage": "https://github.com/bcerati/js-event-bus#readme",
   "main": "src/index.js",
-  "author": "Boris Cerati",
+  "author": "Boris Cerati <contact@boris-web.fr> (https://boris-web.fr)",
   "license": "MIT",
+  "keywords": [
+    "event",
+    "bus",
+    "node",
+    "nodejs"
+  ],
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/bcerati/js-event-bus.git"
+  },
   "devDependencies": {
     "uglify-js": "^3.4.5"
   },
   "scripts": {
-    "build": "uglifyjs ./src/index.js -o ./lib/event-bus-js.min.js"
+    "build": "uglifyjs ./src/index.js -o ./lib/js-event-bus.min.js"
   }
 }

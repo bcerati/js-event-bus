@@ -1,16 +1,16 @@
-# event-bus-js
+# js-event-bus
 Simple Event Bus library built for any JavaScript application.
 
 ## Installation
 
 ### Using npm
 ```
-npm i event-bus-js --save
+npm i js-event-bus --save
 ```
 
 ### Using yarn
 ```
-yarn add event-bus-js
+yarn add js-event-bus
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ This library was built so you can use it in any JS application like Node.js apps
 If you want to use it in your Node.js apps you can import the library like this:
 
 ```js
-const eventBus = require('event-bus-js')();
+const eventBus = require('js-event-bus')();
 ```
 
 ### Importing in browser application
@@ -31,7 +31,7 @@ If you want to use it in your Browser apps you can import the library like this:
 
   <div>Put your content here</div>
 
-  <script src="/lib/event-bus-js/lib/event-bus-js.min.js"></script>
+  <script src="/lib/js-event-bus/lib/js-event-bus.min.js"></script>
   <script>
     const eventBus = new EventBus();
   </script>
