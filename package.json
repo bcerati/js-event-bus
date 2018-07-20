@@ -1,6 +1,6 @@
 {
   "name": "js-event-bus",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Event bus for your Javascript applications",
   "homepage": "https://github.com/bcerati/js-event-bus#readme",
   "main": "src/index.js",

@@ -65,7 +65,32 @@ With this code, when `my-event` is emited this function will be executed. The ne
 With this code, when `my-event` is emited this function will be executed with a maximum of triggers of 3.
 
 #### Detach an event
-This feature is not yet implemented.
+```js
+  var callbackForMyEvent = function () {
+    console.log('Inside `my-event`.');
+  };
+
+  eventBus.on('my-event', callbackForMyEvent);
+
+  eventBus.emit('my-event');
+
+  eventBus.detach('my-event', callbackForMyEvent);
+```
+This code will emit the event `my-event` and then detach the given callback for this event. So it'll not be executed anymore.
+
+#### Remove an event
+```js
+  eventBus.on('my-event', function () {
+    console.log('Inside `my-event`.');
+  });
+
+  eventBus.emit('my-event');
+
+  eventBus.die('my-event');
+```
+This code will emit the event `my-event` and then detach all the callbacks for this event. So any of them won't be executed anymore.
+
+Note that `off` is an alias of `die`.
 
 # License
 MIT

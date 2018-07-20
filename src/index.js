@@ -32,6 +32,7 @@
       });
     };
 
+    // valiodate that the number is a vild number for the number of executions
     this.validateNumber = function (n) {
       var type = n.constructor.name;
 
@@ -44,6 +45,7 @@
       throw new Error('Only `Number` and `any` are accepted in the number of possible executions!');
     };
 
+    // return wether or not this event needs to be removed 
     this.toBeRemoved = function (info) {
       var number = info.number;
       info.execution = info.execution || 0;
@@ -58,18 +60,69 @@
 
     var that = this;
     return {
-      on: function (event, callback) {
-        that.registerListener.bind(that)(event, callback, 'any');
+      /**
+       * Attach a callback to an event
+       * @param {string} eventName - name of the event.
+       * @param {function} callback - callback executed when this event is triggered
+       */
+      on: function (eventName, callback) {
+        that.registerListener.bind(that)(eventName, callback, 'any');
       },
 
-      once: function (event, callback) {
-        that.registerListener.bind(that)(event, callback, 1);
+      /**
+       * Attach a callback to an event. This callback will not be executed more than once if the event is trigger mutiple times
+       * @param {string} eventName - name of the event.
+       * @param {function} callback - callback executed when this event is triggered
+       */
+      once: function (eventName, callback) {
+        that.registerListener.bind(that)(eventName, callback, 1);
       },
 
-      exactly: function (number, event, callback) {
-        that.registerListener.bind(that)(event, callback, number);
+      /**
+       * Attach a callback to an event. This callback will be executed will not be executed more than the number if the event is trigger mutiple times
+       * @param {number} number - max number of executions
+       * @param {string} eventName - name of the event.
+       * @param {function} callback - callback executed when this event is triggered
+       */
+      exactly: function (number, eventName, callback) {
+        that.registerListener.bind(that)(eventName, callback, number);
       },
 
+      /**
+       * Kill an event with all it's callbacks
+       * @param {string} eventName - name of the event.
+       */
+      die: function (eventName) {
+        delete that.listeners[eventName];
+      },
+
+      /**
+       * Kill an event with all it's callbacks
+       * @param {string} eventName - name of the event.
+       */
+      off: function (eventName) {
+        this.die(eventName);
+      },
+
+      /**
+       * Remove the callback for the given event
+       * @param {string} eventName - name of the event.
+       */
+      detach: function (eventName, callback) {
+        for (var k in that.listeners[eventName]) {
+          if (
+            that.listeners[eventName].hasOwnProperty(k) && 
+            that.listeners[eventName][k].callback === callback
+          ) {
+            that.listeners[eventName].splice(k, 1);
+          }
+        }
+      },
+
+      /**
+       * Emit the event
+       * @param {string} eventName - name of the event.
+       */
       emit: function (eventName, context) {
         var listeners = that.listeners[eventName] || [];
         var parentArgs = arguments;
@@ -92,6 +145,7 @@
               }
             });
 
+          // this event cannot be fired again, remove from the stack
           if (that.toBeRemoved(info)) {
             that.listeners[eventName].splice(index, 1);
           }
