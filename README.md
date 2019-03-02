@@ -64,6 +64,21 @@ With this code, when `my-event` is emited this function will be executed. The ne
 ```
 With this code, when `my-event` is emited this function will be executed with a maximum of triggers of 3.
 
+#### Emit an event
+You can emit an event by calling the `emit` function. The arguments are the following:
+
+- the name of the event ;
+- the context of with it will be fired ;
+- ... all the arguments.
+
+Here are some examples:
+
+```js
+  eventBus.emit('my-event');
+  eventBus.emit('my-event', null, 'a', 'b'); // your callback sould be function (a, b) { ... }
+  eventBus.emit('my-event', new SomeObject, 'a', 'b'); // your callback sould be function (a, b) { ... } and `this` will be set to the context of `SomeObject`
+```
+
 #### Detach an event
 ```js
   var callbackForMyEvent = function () {
