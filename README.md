@@ -78,6 +78,18 @@ With this code, when `my-event` is emited this function will be executed with a 
 ```
 This code will emit the event `my-event` and then detach the given callback for this event. So it'll not be executed anymore.
 
+#### Detach an event for all the callbacks that have been set before
+```js
+  eventBus.detach('my-event');
+```
+This code will remove the event `my-event` from the event bus.
+
+#### Detach all the events  created in the event bus
+```js
+  eventBus.detachAll();
+```
+This code will remove the event `my-event` from the event bus.
+
 #### Remove an event
 ```js
   eventBus.on('my-event', function () {
