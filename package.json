@@ -12,9 +12,9 @@
     "node",
     "nodejs"
   ],
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/bcerati/js-event-bus.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcerati/js-event-bus.git"
   },
   "devDependencies": {
     "uglify-js": "^3.4.5"
