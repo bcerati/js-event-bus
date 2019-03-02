@@ -1,10 +1,10 @@
 {
   "name": "js-event-bus",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Event bus for your Javascript applications",
   "homepage": "https://github.com/bcerati/js-event-bus#readme",
   "main": "src/index.js",
-  "author": "Boris Cerati <contact@boris-web.fr> (https://boris-web.fr)",
+  "author": "Boris Cerati <contact@boris-cerati.fr> (https://boris-cerati.fr)",
   "license": "MIT",
   "keywords": [
     "event",
