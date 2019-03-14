@@ -68,7 +68,7 @@ With this code, when `my-event` is emited this function will be executed with a 
 You can emit an event by calling the `emit` function. The arguments are the following:
 
 - the name of the event ;
-- the context of with it will be fired ;
+- the context with which it will be fired ;
 - ... all the arguments.
 
 Here are some examples:
