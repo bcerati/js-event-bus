@@ -64,6 +64,35 @@ With this code, when `my-event` is emited this function will be executed. The ne
 ```
 With this code, when `my-event` is emited this function will be executed with a maximum of triggers of 3.
 
+#### Register using wildcards
+You can use wildcards to register listeners using a specific pattern.
+
+```js
+  eventBus.on('my-event.*', function () {
+    console.log('Inside `my-event.*`');
+  });
+```
+The callback will be executed with the events like `my-event.x`.
+
+* `my-event.x` **will** trigger the callback ;
+* `my-event.y` **will** trigger the callback ;
+* `my-event` **will not** trigger the callback ;
+* `my-event.x.y` **will not** trigger the callback ;
+
+You can also use multiple wildcards to register listeners using a specific pattern.
+
+```js
+  eventBus.on('my-event.*.name.**', function () {
+    console.log('my-event.*.name.**`');
+  });
+```
+The callback will be executed with the events like `my-event.a.name.b.c`.
+
+* `my-event.a.name.b.c` **will** trigger the callback ;
+* `my-event.a.name.b` **will** trigger the callback ;
+* `my-event.name.b` **will not** trigger the callback ;
+
+
 #### Emit an event
 You can emit an event by calling the `emit` function. The arguments are the following:
 

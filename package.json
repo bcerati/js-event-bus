@@ -1,6 +1,6 @@
 {
   "name": "js-event-bus",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Event bus for your Javascript applications",
   "homepage": "https://github.com/bcerati/js-event-bus#readme",
   "main": "src/index.js",
@@ -17,9 +17,11 @@
     "url": "https://github.com/bcerati/js-event-bus.git"
   },
   "devDependencies": {
+    "es-check": "^5.1.0",
+    "prettier": "^1.19.1",
     "uglify-js": "^3.4.5"
   },
   "scripts": {
-    "build": "uglifyjs ./src/index.js -o ./lib/js-event-bus.min.js"
+    "build": "es-check es5 src/index.js && uglifyjs ./src/index.js -o ./lib/js-event-bus.min.js"
   }
 }
