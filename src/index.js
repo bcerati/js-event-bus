@@ -113,15 +113,22 @@
        * @param {callback} callback - the callback to remove (undefined to remove all of them).
        */
       detach: function(eventName, callback) {
+        if (callback === undefined) {
+          that.listeners[eventName] = [];
+          return true;
+        }
+
         for (var k in that.listeners[eventName]) {
           if (
             that.listeners[eventName].hasOwnProperty(k) &&
-            (that.listeners[eventName][k].callback === callback ||
-              callback === undefined)
+            that.listeners[eventName][k].callback === callback
           ) {
             that.listeners[eventName].splice(k, 1);
+            return this.detach(eventName, callback);
           }
         }
+
+        return true;
       },
 
       /**
