@@ -1,23 +1,24 @@
+declare type EventCallback = (...args: any[]) => void;
 export default class EventBus{
   /**
   * Attach a callback to an event
   * @param {string} eventName - name of the event.
   * @param {function} callback - callback executed when this event is triggered
   */
-  on(eventName: string, callback: () => void): void
+  on(eventName: string, callback: EventCallback): void
   /**
    * Attach a callback to an event. This callback will not be executed more than once if the event is trigger mutiple times
    * @param {string} eventName - name of the event.
    * @param {function} callback - callback executed when this event is triggered
    */
-  once(eventName: string, callback: () => void): void
+  once(eventName: string, callback: EventCallback): void
   /**
   * Attach a callback to an event. This callback will be executed will not be executed more than the number if the event is trigger mutiple times
   * @param {number} number - max number of executions
   * @param {string} eventName - name of the event.
   * @param {function} callback - callback executed when this event is triggered
   */
-  exactly(number: number, eventName: string, callback: () => void): void
+  exactly(number: number, eventName: string, callback: EventCallback): void
   /**
    * Kill an event with all it's callbacks
    * @param {string} eventName - name of the event.
@@ -33,7 +34,7 @@ export default class EventBus{
   * @param {string} eventName - name of the event.
   * @param {callback} callback - the callback to remove (undefined to remove all of them).
   */
-  detach(eventName: string, callback?: () => void): boolean
+  detach(eventName: string, callback?: EventCallback): boolean
   /**
   * Remove all the events
   */
@@ -42,5 +43,5 @@ export default class EventBus{
    * Emit the event
    * @param {string} eventName - name of the event.
    */
-  emit(eventName: string): void
+  emit<C = null>(eventName: string, context?: C, ...args: any[]): void
 }
