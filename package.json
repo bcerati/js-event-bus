@@ -24,6 +24,6 @@
   },
   "scripts": {
     "build": "es-check es5 src/index.js && uglifyjs ./src/index.js -o ./lib/js-event-bus.min.js",
-    "release": "npm run build && release-it"
+    "release": "npm run build && git commit -am 'Build files for release' && release-it"
   }
 }
