@@ -1,6 +1,7 @@
 (function(caller, bus) {
   if (typeof exports === 'object' && typeof module === 'object') {
     module.exports = bus();
+    module.exports.default = module.exports;
   } else if (typeof exports === 'object') {
     exports.EventBus = bus();
   } else {
