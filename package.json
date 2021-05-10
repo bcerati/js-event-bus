@@ -19,9 +19,11 @@
   "devDependencies": {
     "es-check": "^5.1.0",
     "prettier": "^1.19.1",
+    "release-it": "^14.6.2",
     "uglify-js": "^3.4.5"
   },
   "scripts": {
-    "build": "es-check es5 src/index.js && uglifyjs ./src/index.js -o ./lib/js-event-bus.min.js"
+    "build": "es-check es5 src/index.js && uglifyjs ./src/index.js -o ./lib/js-event-bus.min.js",
+    "release": "npm run build && release-it"
   }
 }
