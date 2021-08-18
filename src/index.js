@@ -149,7 +149,7 @@
        */
       emit: function(eventName, context) {
         var listeners = [];
-        for (name in that.listeners) {
+        for (var name in that.listeners) {
           if (that.listeners.hasOwnProperty(name)) {
             if (name === eventName) {
               //TODO: this lib should definitely use > ES5
