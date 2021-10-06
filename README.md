@@ -46,7 +46,7 @@ If you want to use it in your Browser apps you can import the library like this:
     console.log('Inside `my-event`');
   });
 ```
-With this code, each time `my-event` is emited this function will be executed.
+With this code, each time `my-event` is emitted this function will be executed.
 
 #### Register only one time to an event
 ```js
@@ -54,7 +54,7 @@ With this code, each time `my-event` is emited this function will be executed.
     console.log('Inside `my-event`. It\'ll be executed only one time!');
   });
 ```
-With this code, when `my-event` is emited this function will be executed. The next triggers of this event won't execute the callback because it is a one time event.
+With this code, when `my-event` is emitted this function will be executed. The next triggers of this event won't execute the callback because it is a one time event.
 
 #### Register several time to an event
 ```js
@@ -62,7 +62,7 @@ With this code, when `my-event` is emited this function will be executed. The ne
     console.log('Inside `my-event`. It\'ll be executed only 3 times!');
   });
 ```
-With this code, when `my-event` is emited this function will be executed with a maximum of triggers of 3.
+With this code, when `my-event` is emitted this function will be executed with a maximum of triggers of 3.
 
 #### Register using wildcards
 You can use wildcards to register listeners using a specific pattern.
