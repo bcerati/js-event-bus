@@ -1,5 +1,5 @@
 {
-    "name": "js-event-bus",
+    "name": "@knighttower/js-event-bus",
     "version": "3.0.0",
     "description": "Event bus for your Javascript applications",
     "homepage": "https://github.com/knighttower/js-event-bus",
