@@ -2,7 +2,7 @@
     "name": "js-event-bus",
     "version": "3.0.0",
     "description": "Event bus for your Javascript applications",
-    "homepage": "https://github.com/bcerati/js-event-bus#readme",
+    "homepage": "https://github.com/knighttower/js-event-bus",
     "main": "src/eventBus.ts",
     "module": "dist/module/eventBus.min.js",
     "jsdeliver": "dist/browser/eventBus.js",
@@ -13,11 +13,14 @@
         "event",
         "bus",
         "node",
-        "nodejs"
+        "nodejs",
+        "browser",
+        "javascript",
+        "typescript"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/bcerati/js-event-bus.git"
+        "url": "https://github.com/knighttower/js-event-bus.git"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^6.7.0",
