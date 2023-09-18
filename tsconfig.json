@@ -1,13 +1,16 @@
 {
-  "include": ["**/*.ts"],
   "compilerOptions": {
-    "lib": ["ES2019"],
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "target": "ES2019",
-    "strict": true,
-    "baseUrl": ".",
-    "noEmit": true
-  }
+    "target": "ES6",         // Specify ECMAScript target version
+    "module": "UMD",    // Specify module code generation
+    "outDir": "./dist/module",      // Output directory
+    "rootDir": "./src",      // Root directory (where your TypeScript files are)
+    "strict": true,          // Enable all strict type checking options
+    "esModuleInterop": true  // Enables CommonJS/AMD/UMD module imports
+  },
+  "include": [
+    "src/**/*.ts"
+       ],
+  "exclude": [
+    "src/**/*.test.ts"
+  ]
 }

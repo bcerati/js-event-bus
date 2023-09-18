@@ -1,32 +1,42 @@
 {
-  "name": "js-event-bus",
-  "version": "2.0.0",
-  "description": "Event bus for your Javascript applications",
-  "homepage": "https://github.com/bcerati/js-event-bus#readme",
-  "main": "src/index.js",
-  "author": "Boris Cerati <contact@boris-cerati.fr> (https://boris-cerati.fr)",
-  "license": "MIT",
-  "keywords": [
-    "event",
-    "bus",
-    "node",
-    "nodejs"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bcerati/js-event-bus.git"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.18.10",
-    "@babel/core": "^7.18.10",
-    "@babel/preset-env": "^7.18.10",
-    "@babel/preset-typescript": "^7.18.6",
-    "es-check": "^7.0.0",
-    "prettier": "^2.7.1",
-    "release-it": "^15.3.0",
-    "uglify-js": "^3.16.3"
-  },
-  "scripts": {
-    "build": "babel src -d lib --extensions \".ts\" && node ./node_modules/uglify-js/bin/uglifyjs ./lib/index.js -c -o ./lib/js-event-bus.min.js"
-  }
+    "name": "js-event-bus",
+    "version": "3.0.0",
+    "description": "Event bus for your Javascript applications",
+    "homepage": "https://github.com/bcerati/js-event-bus#readme",
+    "main": "src/eventBus.ts",
+    "module": "dist/module/eventBus.min.js",
+    "jsdeliver": "dist/browser/eventBus.js",
+    "browser": "dist/browser/eventBus.min.js",
+    "author": "Boris Cerati <contact@boris-cerati.fr> (https://boris-cerati.fr)",
+    "license": "MIT",
+    "keywords": [
+        "event",
+        "bus",
+        "node",
+        "nodejs"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bcerati/js-event-bus.git"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.7.0",
+        "@typescript-eslint/parser": "^6.7.0",
+        "jshint": "^2.13.4",
+        "prettier": "1.19.1",
+        "pretty-quick": "^1.11.1",
+        "terser": "^5.19.4",
+        "ts-loader": "^9.4.4",
+        "typescript": "^5.2.2",
+        "vitest": "^0.34.4",
+        "webpack": "^5.88.2",
+        "webpack-cli": "^5.1.4"
+    },
+    "scripts": {
+        "test": "vitest",
+        "dev": "webpack --mode development && tsc",
+        "build": "webpack --mode production --stats-error-details && tsc && node minify.js",
+        "format": "prettier --config .prettierrc.json --write ./src/**/*.ts",
+        "eslint": "eslint -c ./eslintrc.json --fix ./src --ext .ts"
+    }
 }
