@@ -1,6 +1,6 @@
 {
     "name": "@knighttower/js-event-bus",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "description": "Event bus for your Javascript applications",
     "homepage": "https://github.com/knighttower/js-event-bus",
     "main": "src/eventBus.ts",
@@ -41,5 +41,8 @@
         "build": "webpack --mode production --stats-error-details && tsc && node minify.js",
         "format": "prettier --config .prettierrc.json --write ./src/**/*.ts",
         "eslint": "eslint -c ./eslintrc.json --fix ./src --ext .ts"
+    },
+    "dependencies": {
+        
     }
 }

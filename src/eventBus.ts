@@ -84,30 +84,52 @@ class EventBus {
     /**
      * emits an event with the given name and arguments
      * @param {string} eventName - The name of the event
-     * @param {any} context - The context to bind the callback to
      * @param {any} args - The arguments to pass to the callback
      * @return {void}
-     * @example eventBus.emit('event.name', this, arg1, arg2, arg3)
+     * @use {__context: this|Instance} to pass the context to the callback
+     * @example eventBus.emit('event.name', arg1, arg2, arg3)
+     * @example eventBus.emit('event.name', arg1, arg2, arg3, {__context: YourInstance})
      */
-    emit(eventName: string, context: any, ...args: any): void {
-        let listeners: ListenerType[] = [];
+    emit(eventName: string, ...args: any): void {
+        let queueListeners: ListenerType[] = [];
+        let matches = null;
+        let allArgs = this.extractContextFromArgs(args);
+        let context = allArgs[0];
+        args = allArgs[1];
 
         // name exact match
-        if (this.hasListeners(eventName)) {
-            listeners = this.listeners[eventName];
-        } else if (eventName.includes('*')) {
-            // wildcards support
+        if (this.hasListener(eventName)) {
+            queueListeners = this.listeners[eventName];
+        } else {
+            // -----------------------------------------
+            // Wildcard support
 
-            let newName = eventName.replace(/\*\*/, '([^.]+.?)+');
-            newName = newName.replace(/\*/g, '[^.]+');
+            if (eventName.includes('*')) {
+                // case 1, if the incoming string has * or ** in it
+                // which will suppport emit("name*") or emit("name**") or emit("name.*name**")
+                matches = this.patternSearch(eventName, Object.keys(this.listeners));
 
-            const match = eventName.match(newName);
-            if (match && eventName === match[0]) {
-                listeners = this.listeners[eventName];
+                if (matches) {
+                    matches.forEach((match) => {
+                        queueListeners = queueListeners.concat(this.listeners[match]);
+                    });
+                }
+            } else {
+                // case 2, if the incoming string matches a registered pattern
+                // which will support on("name*") | on("name**") | on("name.*name**")
+                for (const key in this.listeners) {
+                    matches = this.patternSearch(key, [eventName]);
+
+                    if (matches) {
+                        matches.forEach((match) => {
+                            queueListeners = queueListeners.concat(this.listeners[key]);
+                        });
+                    }
+                }
             }
         }
 
-        listeners.forEach((listener, k) => {
+        queueListeners.forEach((listener, k) => {
             let callback = listener.callback;
 
             if (context) {
@@ -118,7 +140,7 @@ class EventBus {
 
             if (listener.triggerCapacity !== undefined) {
                 listener.triggerCapacity--;
-                listeners[k].triggerCapacity = listener.triggerCapacity;
+                queueListeners[k].triggerCapacity = listener.triggerCapacity;
             }
 
             if (this.checkToRemoveListener(listener)) {
@@ -127,8 +149,77 @@ class EventBus {
         });
     }
 
+    /**
+     * Search for a pattern in a list of strings
+     * @method patternSearch
+     * @private
+     * @param {string} pattern - The pattern to search for
+     * @param {string[]} list - The list of strings to search in
+     * @return {string[]|null} - Returns a list of strings that match the pattern, or null if no match is found
+     * @example patternSearch('name.*', ['name.a', 'name.b', 'name.c']) // returns ['name.a', 'name.b', 'name.c']
+     */
+    private patternSearch(pattern: string, list: string[]): string[] | null {
+        let filteredList: string[] = [];
+        // console.log('__testLogHere__', pattern, this.setWildCardString(pattern));
+        const regex: RegExp = new RegExp(this.setWildCardString(pattern));
+
+        filteredList = list.filter((item) => regex.test(item));
+
+        return filteredList.length === 0 ? null : filteredList;
+    }
+
+    private setWildCardString(string: string) {
+        let regexStr = string.replace(/([.+?^${}()|\[\]\/\\])/g, '\\$&'); // escape all regex special chars
+
+        regexStr = regexStr
+            .replace(/\*\*/g, '[_g_]') // Replace wildcard patterns with temporary markers
+            .replace(/\*/g, '(.*?)')
+            .replace(/\[_g_\]/g, '.*');
+
+        return `^${regexStr}$`;
+    }
+
+    /**
+     * Get a list of listeners based on a pattern
+     * @method getListernerByPattern
+     * @private
+     * @param {string} pattern - The pattern to search for
+     * @return {ListenerType[]|null} - Returns a list of listeners that match the pattern, or null if no match is found
+     */
+    private getListernerByPattern(pattern: string): ListenerType[] | null {
+        let listeners: ListenerType[] | null = null;
+
+        Object.keys(this.listeners).forEach((key) => {
+            if (key.includes(pattern)) {
+                listeners = this.listeners[key];
+            }
+        });
+
+        return listeners;
+    }
+
+    /**
+     * Extract the context from the arguments
+     * @method extractContextFromArgs
+     * @private
+     * @param {any[]} args - The arguments to extract the context from
+     * @return {any[]} - Returns an array with the context as the first element and the arguments as the second element
+     */
+    private extractContextFromArgs(args: any[]): any {
+        let context = null;
+        for (let i = 0; i < args.length; i++) {
+            const arg = args[i];
+            if (arg && typeof arg === 'object' && arg.hasOwnProperty('__context')) {
+                context = arg.__context;
+                args.splice(i, 1);
+                break;
+            }
+        }
+        return [context, args];
+    }
+
     private registerListener(eventName: string, callback: EventCallback, triggerCapacity?: number) {
-        if (!this.hasListeners(eventName)) {
+        if (!this.hasListener(eventName)) {
             this.listeners[eventName] = [];
         }
 
@@ -143,7 +234,7 @@ class EventBus {
         return false;
     }
 
-    private hasListeners(eventName: string): boolean {
+    private hasListener(eventName: string): boolean {
         return eventName in this.listeners;
     }
 }
