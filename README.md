@@ -3,6 +3,7 @@
 ### Simple Event Bus library built for any JavaScript application.
 
 (this is an updated fork of [js-event-bus](https://github.com/bcerati/js-event-bus/tree/main) by [bcerati])
+
 **Refactoring and Updates:**
 
 -   Remove some unnecessary redundant method to make it SOLID
@@ -14,6 +15,15 @@
 -   Added terser, webpack (for browser window export) and ts (for module export)
 -   Removed examples folder, the examples are now in the JsDocs comments for Docs creation
 -   Bump the version to Major since there was a lot of refactoring and changes in the Class API
+-   "emit" method now receives the 'context' as part of the 'args' only if set since it is not frequently used and allows to pass the data without the need to set "null" as the context, ex:
+
+    -   eventBus.emit('event.name', arg1, arg2, arg3)
+    -   eventBus.emit('event.name', arg1, arg2, {\_\_context: YourInstance}, ...otherArgs) //order is not important
+
+-   Fixes to the wild card event match. It now accepts correct wild card in the "on" or "emit" method:
+    -   eventBus.emit('event.name.\*\*') // matches on('event.name.hello') or on('event.name.hello.world')
+    -   eventBus.emit('event.\*.string') // matches on('event.name.string') but not on('event.name.hello.world')
+    -   eventBus.on('event.\*.string.\*\*') // matches emit('event.name.string.emitter') or emit('event.name.string.hello.world')
 
 ## Installation
 
@@ -131,8 +141,8 @@ Here are some examples:
 
 ```js
 eventBus.emit('my-event');
-eventBus.emit('my-event', null, 'a', 'b'); // your callback sould be function (a, b) { ... }
-eventBus.emit('my-event', new SomeObject(), 'a', 'b'); // your callback sould be function (a, b) { ... } and `this` will be set to the context of `SomeObject`
+eventBus.emit('my-event', 'a', 'b' {__context: someInstance}); // your callback sould be function (a, b) { ... }
+eventBus.emit('my-event', 'a', 'b', 'c', {__context: new SomeObject()}); // your callback sould be function (a, b) { ... } and `this` will be set to the context of `SomeObject`
 ```
 
 #### Detach an event
