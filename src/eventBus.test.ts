@@ -210,3 +210,32 @@ test('nested wildcard and emit with "on" multi card', async () => {
     eventBus.emit('my-event.y.other-name.c');
     assert(triggered === 1);
 });
+
+test('passing data', async () => {
+    const eventBus = new EventBus();
+    let content = null;
+    eventBus.on('my-event', (data) => {
+        content = data;
+    });
+    eventBus.emit('my-event', 'hello', 'world');
+    assert.equal(content, 'hello');
+});
+test('passing data multi args', async () => {
+    const eventBus = new EventBus();
+    let content = null;
+    eventBus.on('my-event', (data, other) => {
+        content = other;
+    });
+    eventBus.emit('my-event', 'hello', 'world', 'other');
+    assert.equal(content, 'world');
+});
+
+test('passing data object', async () => {
+    const eventBus = new EventBus();
+    let content = null;
+    eventBus.on('my-event', (data) => {
+        content = data;
+    });
+    eventBus.emit('my-event', { key: 'value' });
+    assert.deepEqual(content, { key: 'value' });
+});
