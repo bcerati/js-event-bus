@@ -2,8 +2,6 @@
 
 ### Simple Event Bus library built for any JavaScript application.
 
-(this is an updated and improved fork of [js-event-bus](https://github.com/bcerati/js-event-bus/tree/main) by [bcerati])
-
 **Refactoring and Updates:**
 
 -   Remove some unnecessary methods to make it SOLID
@@ -24,6 +22,8 @@
     -   eventBus.emit('event.name.\*\*') // matches on('event.name.hello') or on('event.name.hello.world')
     -   eventBus.emit('event.\*.string') // matches on('event.name.string') but not on('event.name.hello.world')
     -   eventBus.on('event.\*.string.\*\*') // matches emit('event.name.string.emitter') or emit('event.name.string.hello.world')
+
+(this is an updated and improved fork of [js-event-bus](https://github.com/bcerati/js-event-bus/tree/main) by [bcerati])
 
 ## Installation
 
@@ -71,7 +71,7 @@ If you want to use it in your Browser apps you can import the library like this:
 #### Register to an event
 
 ```js
-eventBus.on('my-event', function() {
+eventBus.on('my-event', function () {
     console.log('Inside `my-event`');
 });
 ```
@@ -81,7 +81,7 @@ With this code, each time `my-event` is emitted this function will be executed.
 #### Register only one time to an event
 
 ```js
-eventBus.once('my-event', function() {
+eventBus.once('my-event', function () {
     console.log("Inside `my-event`. It'll be executed only one time!");
 });
 ```
@@ -91,7 +91,7 @@ With this code, when `my-event` is emitted this function will be executed. The n
 #### Register several time to an event
 
 ```js
-eventBus.exactly(3, 'my-event', function() {
+eventBus.exactly(3, 'my-event', function () {
     console.log("Inside `my-event`. It'll be executed only 3 times!");
 });
 ```
@@ -103,7 +103,7 @@ With this code, when `my-event` is emitted this function will be executed with a
 You can use wildcards to register listeners using a specific pattern.
 
 ```js
-eventBus.on('my-event.*', function() {
+eventBus.on('my-event.*', function () {
     console.log('Inside `my-event.*`');
 });
 ```
@@ -118,7 +118,7 @@ The callback will be executed with the events like `my-event.x`.
 You can also use multiple wildcards to register listeners using a specific pattern.
 
 ```js
-eventBus.on('my-event.*.name.**', function() {
+eventBus.on('my-event.*.name.**', function () {
     console.log('my-event.*.name.**`');
 });
 ```
@@ -148,7 +148,7 @@ eventBus.emit('my-event', 'a', 'b', 'c', {__context: new SomeObject()}); // your
 #### Detach an event
 
 ```js
-var callbackForMyEvent = function() {
+var callbackForMyEvent = function () {
     console.log('Inside `my-event`.');
 };
 
@@ -172,7 +172,7 @@ This code will remove the event `my-event` from the event bus.
 #### Remove an event
 
 ```js
-eventBus.on('my-event', function() {
+eventBus.on('my-event', function () {
     console.log('Inside `my-event`.');
 });
 
