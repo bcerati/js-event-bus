@@ -2,12 +2,12 @@
 
 ### Simple Event Bus library built for any JavaScript application.
 
-(this is an updated fork of [js-event-bus](https://github.com/bcerati/js-event-bus/tree/main) by [bcerati])
+(this is an updated and improved fork of [js-event-bus](https://github.com/bcerati/js-event-bus/tree/main) by [bcerati])
 
 **Refactoring and Updates:**
 
--   Remove some unnecessary redundant method to make it SOLID
--   Remove different file language versions to unify the conde into one and ease maintenance
+-   Remove some unnecessary methods to make it SOLID
+-   Remove different file language versions to unify the code into one and ease maintenance
 -   Fixed and made the code JsDocs and Ts compliant
 -   Fixed minor code issues
 -   Added correct distribution files to modules and browser

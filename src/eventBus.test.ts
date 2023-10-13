@@ -12,7 +12,9 @@ test('should register an event and trigger it', () => {
 
     eventBus.emit('myEvent');
 
-    if (!flag) throw new Error('Event not triggered');
+    if (!flag) {
+        throw new Error('Event not triggered');
+    }
 });
 
 test('should trigger an event only once', () => {
@@ -26,7 +28,9 @@ test('should trigger an event only once', () => {
     eventBus.emit('myEvent');
     eventBus.emit('myEvent');
 
-    if (counter !== 1) throw new Error('Event triggered more than once');
+    if (counter !== 1) {
+        throw new Error('Event triggered more than once');
+    }
 });
 
 test('should trigger an event exactly N times', () => {
@@ -39,14 +43,16 @@ test('should trigger an event exactly N times', () => {
         () => {
             counter++;
         },
-        N
+        N,
     );
 
     for (let i = 0; i < N + 1; i++) {
         eventBus.emit('myEvent');
     }
 
-    if (counter !== N) throw new Error(`Event should be triggered exactly ${N} times`);
+    if (counter !== N) {
+        throw new Error(`Event should be triggered exactly ${N} times`);
+    }
 });
 
 test('should kill an event with all its callbacks', () => {
@@ -60,7 +66,9 @@ test('should kill an event with all its callbacks', () => {
     eventBus.off('myEvent');
     eventBus.emit('myEvent');
 
-    if (flag) throw new Error('Event should not be triggered after off()');
+    if (flag) {
+        throw new Error('Event should not be triggered after off()');
+    }
 });
 
 test('should detach a specific callback for an event', () => {
@@ -81,7 +89,9 @@ test('should detach a specific callback for an event', () => {
     eventBus.detach('myEvent', callback1);
     eventBus.emit('myEvent');
 
-    if (counter1 !== 0 || counter2 !== 1) throw new Error('Callback not detached correctly');
+    if (counter1 !== 0 || counter2 !== 1) {
+        throw new Error('Callback not detached correctly');
+    }
 });
 
 test('off', async () => {
@@ -127,7 +137,7 @@ test('exactly', async () => {
         () => {
             triggered++;
         },
-        3
+        3,
     );
     eventBus.emit('my-event');
     eventBus.emit('my-event');

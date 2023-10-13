@@ -3,6 +3,7 @@ type EventCallback = (...args: any[]) => void;
 
 // Rename to ListernType since there are a lot of "listener" keywords in the code
 type ListenerType = {
+    // eslint-disable-next-line
     callback: EventCallback;
     triggerCapacity?: number;
 };
@@ -69,7 +70,7 @@ class EventBus {
     detach(eventName: string, callback: EventCallback): void | boolean {
         const listeners = this.listeners[eventName] || [];
 
-        const filteredListeners = listeners.filter(function(value) {
+        const filteredListeners = listeners.filter(function (value) {
             return value.callback !== callback;
         });
 
@@ -93,8 +94,8 @@ class EventBus {
     emit(eventName: string, ...args: any): void {
         let queueListeners: ListenerType[] = [];
         let matches = null;
-        let allArgs = this.extractContextFromArgs(args);
-        let context = allArgs[0];
+        const allArgs = this.extractContextFromArgs(args);
+        const context = allArgs[0];
         args = allArgs[1];
 
         // name exact match
@@ -121,9 +122,7 @@ class EventBus {
                     matches = this.patternSearch(key, [eventName]);
 
                     if (matches) {
-                        matches.forEach((match) => {
-                            queueListeners = queueListeners.concat(this.listeners[key]);
-                        });
+                        queueListeners = queueListeners.concat(this.listeners[key]);
                     }
                 }
             }
@@ -169,10 +168,13 @@ class EventBus {
     }
 
     private setWildCardString(string: string) {
+        // eslint-disable-next-line
         let regexStr = string.replace(/([.+?^${}()|\[\]\/\\])/g, '\\$&'); // escape all regex special chars
 
         regexStr = regexStr
+            // eslint-disable-next-line
             .replace(/\*\*/g, '[_g_]') // Replace wildcard patterns with temporary markers
+            // eslint-disable-next-line
             .replace(/\*/g, '(.*?)')
             .replace(/\[_g_\]/g, '.*');
 
@@ -209,6 +211,7 @@ class EventBus {
         let context = null;
         for (let i = 0; i < args.length; i++) {
             const arg = args[i];
+            // eslint-disable-next-line
             if (arg && typeof arg === 'object' && arg.hasOwnProperty('__context')) {
                 context = arg.__context;
                 args.splice(i, 1);
