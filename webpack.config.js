@@ -1,15 +1,28 @@
 // webpack.config.js
 const path = require('path');
-
-module.exports = {
-    entry: './src/eventBus.ts', // Entry point of your TypeScript module
-    output: {
-        filename: 'eventBus.js', // Output bundle file name
-        path: path.resolve(__dirname, 'dist/browser'), // Output directory
-        libraryTarget: 'window',
-    },
+/**
+ * Generates a Webpack configuration for a given library name and target.
+ *
+ * @param {string} libraryName - The name of the library.
+ * @param {string} libraryTarget - The library target format.
+ * @returns {Object} - The Webpack configuration.
+ */
+const getWebpackConfig = (libraryName, libraryTarget, dir, ext) => ({
+    entry: `./src/${libraryName}.${ext}`,
     resolve: {
-        extensions: ['.ts', '.js'], // Allow imports of .ts and .js files
+        modules: ['node_modules', path.resolve(__dirname, 'src')],
+        extensions: ['.mjs', '.js', '.json', '.cjs', '.ts'],
+    },
+    output: {
+        path: path.resolve(__dirname, `dist/${dir}`),
+        filename: `${libraryName}.js`,
+        library: libraryName,
+        libraryTarget: libraryTarget,
+        umdNamedDefine: true,
+    },
+    stats: 'errors-only',
+    optimization: {
+        minimize: false, // Disable code minification
     },
     module: {
         rules: [
@@ -20,8 +33,16 @@ module.exports = {
             },
         ],
     },
-    optimization: {
-        minimize: false, // Disable code minification
-    },
     ignoreWarnings: [/Critical dependency: require function is used/],
-};
+});
+
+const targets = [{ name: 'eventBus', ext: 'ts' }];
+
+// Generate multiple configurations
+const configs = targets.flatMap((target) => [
+    getWebpackConfig(target.name, 'umd', 'umd', target.ext),
+    getWebpackConfig(target.name, 'commonjs2', 'cjs', target.ext),
+    getWebpackConfig(target.name, 'window', 'browser', target.ext),
+]);
+
+module.exports = configs;

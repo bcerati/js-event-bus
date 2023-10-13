@@ -1,0 +1,40 @@
+# https://github.com/phips28/gh-action-bump-version
+# in commit use #major or #minor or #patch (default) to bump the version
+
+name: 'release version'
+on:
+    push:
+        branches:
+            - 'development'
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+            - run: npm ci
+            - run: npm run test
+    tagged-release:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+              with:
+                  node-version: '16'
+            - name: Get package version
+              id: package_version
+              run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
+            - name: Get commit message
+              id: commit_message
+              run: echo "::set-output name=message::$(git log --format=%B -n 1 ${{ github.event.after }})"
+            - name: Create release
+              uses: marvinpinto/action-automatic-releases@latest
+              with:
+                  repo_token: ${{ secrets.GIT_TOKEN }}
+                  automatic_release_tag: 'v${{ steps.package_version.outputs.version }}'
+                  prerelease: false
+                  files: ./*
+                  body: ${{ steps.commit_message.outputs.message }}

@@ -90,8 +90,8 @@
         emit(eventName, ...args) {
             let queueListeners = [];
             let matches = null;
-            let allArgs = this.extractContextFromArgs(args);
-            let context = allArgs[0];
+            const allArgs = this.extractContextFromArgs(args);
+            const context = allArgs[0];
             args = allArgs[1];
             // name exact match
             if (this.hasListener(eventName)) {
@@ -116,9 +116,7 @@
                     for (const key in this.listeners) {
                         matches = this.patternSearch(key, [eventName]);
                         if (matches) {
-                            matches.forEach((match) => {
-                                queueListeners = queueListeners.concat(this.listeners[key]);
-                            });
+                            queueListeners = queueListeners.concat(this.listeners[key]);
                         }
                     }
                 }
@@ -155,9 +153,12 @@
             return filteredList.length === 0 ? null : filteredList;
         }
         setWildCardString(string) {
+            // eslint-disable-next-line
             let regexStr = string.replace(/([.+?^${}()|\[\]\/\\])/g, '\\$&'); // escape all regex special chars
             regexStr = regexStr
+                // eslint-disable-next-line
                 .replace(/\*\*/g, '[_g_]') // Replace wildcard patterns with temporary markers
+                // eslint-disable-next-line
                 .replace(/\*/g, '(.*?)')
                 .replace(/\[_g_\]/g, '.*');
             return `^${regexStr}$`;
@@ -189,6 +190,7 @@
             let context = null;
             for (let i = 0; i < args.length; i++) {
                 const arg = args[i];
+                // eslint-disable-next-line
                 if (arg && typeof arg === 'object' && arg.hasOwnProperty('__context')) {
                     context = arg.__context;
                     args.splice(i, 1);
