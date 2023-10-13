@@ -1,6 +1,5 @@
 // webpack.config.js
 const path = require('path');
-// const CompressionPlugin = require('compression-webpack-plugin');
 /**
  * Generates a Webpack configuration for a given library name and target.
  *
@@ -34,16 +33,6 @@ const getWebpackConfig = (libraryName, libraryTarget, dir, ext) => ({
             },
         ],
     },
-    plugins: [
-        // new CompressionPlugin({
-        //     algorithm: 'brotliCompress',
-        //     test: /\.js$/,
-        //     compressionOptions: { level: 11 },
-        //     threshold: 10240,
-        //     minRatio: 0.8,
-        //     deleteOriginalAssets: false,
-        // }),
-    ],
     ignoreWarnings: [/Critical dependency: require function is used/],
 });
 

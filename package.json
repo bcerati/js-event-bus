@@ -1,6 +1,6 @@
 {
     "name": "@knighttower/js-event-bus",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "description": "Event bus for your Javascript applications",
     "homepage": "https://github.com/knighttower/js-event-bus",
     "main": "src/eventBus.ts",
@@ -25,7 +25,6 @@
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^6.7.0",
         "@typescript-eslint/parser": "^6.7.0",
-        "compression-webpack-plugin": "^10.0.0",
         "eslint": "^8.51.0",
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-prettier": "^5.0.1",
@@ -35,16 +34,15 @@
         "terser": "^5.19.4",
         "ts-loader": "^9.4.4",
         "typescript": "^5.2.2",
-        "undici-types": "^5.26.3",
         "vitest": "^0.34.4",
         "webpack": "^5.88.2",
         "webpack-cli": "^5.1.4"
     },
     "scripts": {
         "ts": "tsc",
-        "dev": "webpack --mode development && tsc",
+        "dev": "webpack --mode development",
         "watch": "webpack --mode development --watch",
-        "build": "webpack --mode production && tsc && node minify.js && node ./BumpVersion.js",
+        "build": "webpack --mode production && node minify.js && node ./BumpVersion.cjs",
         "test": "npm run format && npm run eslint && vitest",
         "format": "prettier --config .prettierrc.json --write ./src",
         "format-check": "prettier --config .prettierrc.json --check ./src",
