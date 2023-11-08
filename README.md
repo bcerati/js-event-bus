@@ -134,15 +134,15 @@ The callback will be executed with the events like `my-event.a.name.b.c`.
 You can emit an event by calling the `emit` function. The arguments are the following:
 
 -   the name of the event ;
--   the context with which it will be fired ;
 -   ... all the arguments.
+Note: In order to pass the "context" (ex: 'this', or ex: ObjectInstance) to the event, it can be easily added within an object containing the property "__context" as part of the arguments. This will be automatically injected into the event and removed from the Arguments, so no need of sanitation.
 
 Here are some examples:
 
 ```js
 eventBus.emit('my-event');
-eventBus.emit('my-event', 'a', 'b' {__context: someInstance}); // your callback sould be function (a, b) { ... }
-eventBus.emit('my-event', 'a', 'b', 'c', {__context: new SomeObject()}); // your callback sould be function (a, b) { ... } and `this` will be set to the context of `SomeObject`
+eventBus.emit('my-event', 'a', 'b', {__context: someInstance}); // your callback sould be function (a, b) { ... }
+eventBus.emit('my-event', 'a', 'b', 'c', {__context: new SomeObject()}); // your callback sould be function (a, b) { ... } and `this` will be set to the context of `SomeObject`. Order is not important.
 ```
 
 #### Detach an event
